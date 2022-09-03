@@ -1,20 +1,18 @@
 package io.study.security_basic.Entity;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
+@ToString
+@Table(name="users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BasedEntity {
     @Id
     @GeneratedValue
+    @Column(name="user_id")
     private Long id;
     private String username;
     private String password;
@@ -26,6 +24,6 @@ public class User extends BasedEntity {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.role = role;
+        this.role = "ROLE_USER";
     }
 }

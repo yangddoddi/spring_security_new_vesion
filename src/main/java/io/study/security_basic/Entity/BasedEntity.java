@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 public abstract class BasedEntity {
     @CreatedDate
     @DateTimeFormat(pattern = "yyyy-MM-dd/HH:mm:ss")
+    @Column(updatable = false)
     private LocalDateTime createdDate;
 
     @LastModifiedDate
