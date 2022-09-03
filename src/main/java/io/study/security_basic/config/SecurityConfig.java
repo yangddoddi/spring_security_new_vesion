@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity // 스프링 필터 체인에 SecurityConfig(필터) 등록
-@EnableGlobalMethodSecurity(securedEnabled = true) // 특정 메서드에만 Secure로 적용 가능
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true) // 특정 메서드에만 Secure로 적용 가능
 public class SecurityConfig {
 
     @Bean
@@ -23,7 +23,7 @@ public class SecurityConfig {
                 .antMatchers("/manager/**").access("hasRole('ADMIN') or hasRole('MANAGER')")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/form/**", "/").permitAll()
-                .anyRequest().denyAll()
+                .anyRequest().denyAll() // 화이트리스트
                         .and().formLogin()
                 .loginPage("/form/login")
                         .loginProcessingUrl("/login") // /login 호출 시 시큐리티가 로그인진행
