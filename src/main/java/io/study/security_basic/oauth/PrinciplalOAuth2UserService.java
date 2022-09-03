@@ -4,6 +4,7 @@ import io.study.security_basic.Entity.User;
 import io.study.security_basic.auth.PrincipalDetails;
 import io.study.security_basic.auth.provider.FacebookUserInfo;
 import io.study.security_basic.auth.provider.GoogleUserInfo;
+import io.study.security_basic.auth.provider.NaverUserInfo;
 import io.study.security_basic.auth.provider.OAuth2UserInfo;
 import io.study.security_basic.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,8 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /*
 *
@@ -46,6 +49,8 @@ public class PrinciplalOAuth2UserService extends DefaultOAuth2UserService {
             oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
         } else if (userRequest.getClientRegistration().getRegistrationId().equals("facebook")) {
             oAuth2UserInfo = new FacebookUserInfo(oAuth2User.getAttributes());
+        } else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
+            oAuth2UserInfo = new NaverUserInfo((Map<String,Object>)oAuth2User.getAttributes().get("response"));
         } else {
             throw new OAuth2AuthenticationException("잘못된 요청입니다.");
         }
