@@ -20,3 +20,30 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 1057069628656-2a4l0s8753d8osj570cakm71363t9rub.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
+          facebook:
+            client-id: 645972650466408
+            client-secret: b63decf28017aa2652263cce6bc4201e
+            scope:
+              - email
+              - public_profile
+          naver:
+            client-id: lHsXqFTPHDM2POh1Vq_1
+            client-secret: yJBDvVCv7L
+            scope:
+              - name
+              - email
+              - profile_image
+            client-name: Naver
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/login/oauth2/code/naver

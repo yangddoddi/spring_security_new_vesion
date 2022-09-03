@@ -19,11 +19,23 @@ public class User extends BasedEntity {
     private String email;
     private String role;
 
-    @Builder
+    private String provider;
+    private String providerId;
+
     public User(String username, String password, String email, String role) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = "ROLE_USER";
+    }
+
+    @Builder
+    public User(String username, String password, String email, String role, String provider, String providerId) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.provider = provider;
+        this.providerId = providerId;
     }
 }

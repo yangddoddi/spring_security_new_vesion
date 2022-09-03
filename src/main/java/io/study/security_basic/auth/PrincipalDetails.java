@@ -3,29 +3,50 @@ package io.study.security_basic.auth;
 // 로그인 진행 완료 -> Security ContextHolder(세션) 생성
 // SecurityContextHolder -> Authentication -> UserDetails
 
-/*
-* 로그인 진행 완료 -> Security ContextHolder(세션) 생성
-* SecurityContextHolder -> Authentication -> UserDetails
-* Session(Authentication(UserDeatils))
-* */
+
 
 
 import io.study.security_basic.Entity.User;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
-public class PrincipalDetails implements UserDetails {
-    private User user;
+/*
+ * 로그인 진행 완료 -> Security ContextHolder(세션) 생성
+ * SecurityContextHolder -> Authentication -> UserDetails or OAuth2USer
+ * Session(Authentication(UserDeatils, OAuth2User))
+ *
+ * getAttribute -> Oauth2User
+ *
+ * */
+
+@Getter
+public class PrincipalDetails implements UserDetails, OAuth2User {
     private final int TIME_LIMIT = 2;
+    private User user;
+    private Map<String, Object> attributes;
 
+    // 일반 로그인
     public PrincipalDetails(User user) {
         this.user=user;
+    }
+
+    // OAuth 로그인
+    public PrincipalDetails(User user, Map<String, Object> attributes) {
+        this.user = user;
+        this.attributes = attributes;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
     }
 
     @Override
@@ -64,5 +85,10 @@ public class PrincipalDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return user.getModifiedDate().isAfter(ChronoLocalDateTime.from(LocalDateTime.now().minusYears(TIME_LIMIT)));
+    }
+
+    @Override
+    public String getName() {
+        return attributes.get("sub").toString();
     }
 }
