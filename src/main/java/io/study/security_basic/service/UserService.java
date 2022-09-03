@@ -1,5 +1,6 @@
 package io.study.security_basic.service;
 
+import io.study.security_basic.Entity.User;
 import io.study.security_basic.repository.UserRepository;
 import io.study.security_basic.request.UserJoinDto;
 import lombok.RequiredArgsConstructor;
@@ -16,5 +17,9 @@ public class UserService {
         // 패스워드 인코드
         user.encodePassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user.toEntity());
+    }
+
+    public User findById(String id) {
+        return userRepository.findByUsername(id);
     }
 }

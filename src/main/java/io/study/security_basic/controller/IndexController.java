@@ -5,6 +5,7 @@ import io.study.security_basic.request.UserJoinDto;
 import io.study.security_basic.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,7 +53,6 @@ public class IndexController {
     }
 
     @PostMapping("/form/login")
-    @ResponseBody
     public String postLogin() {
         return "ok";
     }
@@ -61,5 +61,11 @@ public class IndexController {
     public String postJoin(UserJoinDto user) {
         userService.join(user);
         return "redirect:/loginForm";
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/ingo")
+    public String info() {
+        return "개인정보 히히";
     }
 }
