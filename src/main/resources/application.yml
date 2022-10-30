@@ -21,6 +21,13 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
 
+logging:
+  level:
+    org.springframework.web.client: debug
+    org.hibernate.sql: debug
+    org.hibernate.type: trace
+    org.springframework.security: debug
+
   security:
     oauth2:
       client:

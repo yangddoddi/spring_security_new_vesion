@@ -3,12 +3,16 @@ package io.study.security_basic.Entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @ToString
+@Builder
 @Table(name="users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class User extends BasedEntity {
     @Id
     @GeneratedValue
@@ -16,11 +20,18 @@ public class User extends BasedEntity {
     private Long id;
     private String username;
     private String password;
+    private String nickname;
     private String email;
     private String role;
 
     private String provider;
     private String providerId;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments = new ArrayList<>();
 
     public User(String username, String password, String email, String role) {
         this.username = username;
